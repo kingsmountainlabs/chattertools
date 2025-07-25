@@ -14,7 +14,7 @@ class Parse:
     @staticmethod
     def datetime(val: Union[dt, int, str]) -> Result[dt, str]:
         if val is None: return Ok(None)
-        if val is "": return Ok(None)
+        if val == "": return Ok(None)
 
         if isinstance(val, dt): return Ok(val)
         if isinstance(val, int): return Ok(dt.fromtimestamp(val))
