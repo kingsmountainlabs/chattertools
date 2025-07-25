@@ -1,4 +1,4 @@
-from datetime import datetime
+import datetime as dt
 from typing import Any, Union
 from result import Result, Ok, Err
 
@@ -12,25 +12,25 @@ class Parse:
             return Err(f"Cannot convert value {val} to integer")
 
     @staticmethod
-    def parse_datetime(val: Union[datetime, int, str]) -> Result[datetime, str]:
+    def parse_datetime(val: Union[dt.datetime, int, str]) -> Result[dt.datetime, str]:
         if val is None: return Ok(None)
         if val == "": return Ok(None)
 
-        if isinstance(val, datetime): return Ok(val)
-        if isinstance(val, int): return Ok(datetime.fromtimestamp(val))
+        if isinstance(val, dt.datetime): return Ok(val)
+        if isinstance(val, int): return Ok(dt.datetime.fromtimestamp(val))
 
         if isinstance(val, str):
             formats = ["%Y-%m-%dT%H:%M:%S.%fZ", "%Y-%m-%d %H:%M:%S"]
             for format in formats:
                 try:
-                    return Ok(datetime.strptime(val, format))
+                    return Ok(dt.datetime.strptime(val, format))
                 except ValueError:
                     pass
 
             return Err(f'Invalid datetime format "{val}"')
     
     @staticmethod
-    def apiDatetime(val: datetime) -> Result[str, str]:
+    def apiDatetime(val: dt.datetime) -> Result[str, str]:
         try:
             return Ok(val.strftime("%Y-%m-%d %H:%M:%S"))
         except Exception:
