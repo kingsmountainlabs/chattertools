@@ -61,7 +61,7 @@ class DataType(Enum):
         if type == float:
             return float
         if type == datetime:
-            return Parse.datetime
+            return Parse.parse_datetime
         if type == str:
             return str
         return None
